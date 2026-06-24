@@ -1,0 +1,67 @@
+# Single conda environment for the full Tuolumne SWE-ramp / coherence
+# analysis pipeline -- synthetic, ASO lidar, NISAR GUNW, and S1 HyP3.
+#
+# Build:
+#   conda env create -f environment.yml
+# Update (when this file changes):
+#   conda env update -f environment.yml --prune
+#
+# After creation, install the local nisar_pytools clone editable:
+#   conda activate tuolome_swe
+#   pip install -e /Users/zmhoppinen/Documents/nisar_pytools
+#
+# Frostbyte InSAR pipeline helpers are imported via sys.path injection
+# (see fetch_s1_tuolome.py) -- no install needed, just needs the deps
+# already present here (asf_search, hyp3_sdk, networkx, dateutil).
+
+name: tuolome_swe
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.11
+
+  # Core scientific stack
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - matplotlib
+
+  # Geospatial I/O and CRS handling
+  - rasterio
+  - rioxarray
+  - shapely
+  - pyproj
+  - geopandas
+  - h5py
+  - netcdf4
+  - contextily        # basemap tiles for AOI overview figures
+
+  # nisar_pytools transitive deps that aren't strictly imported by our
+  # scripts but are needed for the LIA / GUNW helpers to import cleanly.
+  - dask
+  - snaphu
+  - pyyaml
+
+  # SAR / HyP3 stack (S1 fetch + NISAR GUNW search)
+  - asf_search
+  - hyp3-sdk
+
+  # Frostbyte helper transitive imports
+  - networkx
+  - python-dateutil
+
+  # Misc utilities used across scripts
+  - tqdm
+  - requests
+
+  - pip
+
+  - pip:
+    # Copernicus / 3DEP DEM tile stitcher; not on conda-forge.
+    - dem_stitcher
+    # If you'd rather skip the editable install above, uncomment this and
+    # point pip at the local clone (or a git URL):
+    # - -e /Users/zmhoppinen/Documents/nisar_pytools

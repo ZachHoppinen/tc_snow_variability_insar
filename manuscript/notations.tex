@@ -1,0 +1,31 @@
+%==============================================================
+%  notation.tex  —  shared math notation for InSAR / SWE papers
+%  Usage: put \input{notation} in the preamble of every paper.
+%  Edit a definition here once and it updates in all manuscripts.
+%==============================================================
+
+%--- Core quantities ------------------------------------------
+\newcommand{\swe}{\mathrm{SWE}}        % was \mathrm{SWE} (x12)
+\newcommand{\dswe}{\Delta\swe}         % SWE change: unifies \Delta\mathrm{SWE} and stray \triangle
+\newcommand{\dphi}{\Delta\phi}         % interferometric phase change (x10)
+\newcommand{\phizero}{\phi_{0}}        % scene-wide reference offset
+\newcommand{\rmse}{\mathrm{RMSE}}      % RMSE in math mode
+\newcommand{\rsq}{r^{2}}               % r-squared (use $\rsq$ in prose too)
+
+%--- Roman subscripts (one helper, consistent everywhere) -----
+\newcommand{\rsub}[1]{_{\mathrm{#1}}}  % generic roman subscript
+\newcommand{\ssnow}{\rsub{snow}}         % external dataset
+\newcommand{\sext}{\rsub{ext}}         % external dataset
+\newcommand{\ssar}{\rsub{SAR}}         % SAR-measured
+\newcommand{\scoh}{\rsub{coh}}         % decorrelation / coherence
+\newcommand{\strue}{\rsub{true}}       % true value
+\newcommand{\snonsnow}{_{\mathrm{non\text{-}snow}}} % fixes the non-snow / non\text{-}snow split
+
+%--- Composite terms you reuse --------------------------------
+\newcommand{\dphisar}{\dphi\ssar}      % \Delta\phi_{SAR}
+\newcommand{\dphiext}{\dphi\sext}      % \Delta\phi_{ext}
+\newcommand{\dphiswe}{\dphi\rsub{SWE}} % \Delta\phi_{SWE}
+
+%--- Draft annotation (grep out [[ ]] before submitting) ------
+\usepackage{xcolor}
+\newcommand{\note}[1]{\textcolor{red}{[[#1]]}}

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Large / external data (never commit raw inputs)
+*.tif
+*.tiff
+*.h5
+*.nc
+*.zip
+*.shp
+*.dbf
+*.shx
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+manuscript/template.pdf

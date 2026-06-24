@@ -161,7 +161,7 @@ def main() -> None:
     fig.colorbar(im_M, ax=ax_M, location="bottom", shrink=0.85, pad=0.02,
                  label="|M|")
 
-    out = FIG_DIR / "coherence_rows_P12_P23.png"
+    out = FIG_DIR / "6_coherence_rows_P12_P23.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote {out}")

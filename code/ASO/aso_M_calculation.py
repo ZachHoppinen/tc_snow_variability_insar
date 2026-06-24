@@ -44,7 +44,7 @@ from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
 # --- paths ------------------------------------------------------------------
 # Per-pair folders written by aso_pairwise_dswe.py: each holds aso_dswe_3m.nc.
 PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
-FIG_DIR = FIG_ROOT
+FIG_DIR = FIG_ROOT / "etc"
 
 # (water-year label, early flight, late flight) -- same pairs as upstream.
 PAIRS = [

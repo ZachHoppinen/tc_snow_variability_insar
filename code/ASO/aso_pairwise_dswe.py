@@ -42,7 +42,7 @@ from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
 #   PROCESSED_DIR/{date_a}_{date_b}/dswe/*_swe_50m.tif
 #   PROCESSED_DIR/{date_a}_{date_b}/dsd/*_snowdepth_{3,50}m.tif
 PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
-FIG_DIR = FIG_ROOT
+FIG_DIR = FIG_ROOT / "etc"
 
 # product suffix -> the prep_aso subdir it lives in
 SUBDIR = {"swe_50m.tif": "dswe",

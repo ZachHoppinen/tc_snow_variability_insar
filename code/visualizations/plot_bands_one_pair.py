@@ -87,7 +87,7 @@ def main() -> None:
                  pad=0.02, label="Phase Bias (deg)")
 
     fig.suptitle(f"{wy} ({gap_days(a, b)} days): sub-pixel M by band at 81 m")
-    out = FIG_DIR / f"bands_M_{wy}.png"
+    out = FIG_DIR / f"7_bands_M_{wy}.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote {out}")

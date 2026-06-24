@@ -129,7 +129,7 @@ def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     apply_style()
     fields = make_fields()
-    titles = ["Uniform $\\Delta$SWE", "Symmetric, varying $\\Delta$SWE",
+    titles = ["Constant $\\Delta$SWE", "Symmetric, varying $\\Delta$SWE",
               "Skewed $\\Delta$SWE"]
     vmin = min(f.min() for f in fields)
     vmax = max(f.max() for f in fields)
@@ -160,7 +160,7 @@ def main() -> None:
     # attach to the whole grid (not just row 0) so both rows shrink equally and
     # stay column-aligned; the bar spans the full height on the right.
     fig.colorbar(im, ax=axes, shrink=0.6, label="$\\Delta$SWE (cm)")
-    out = FIG_DIR / "teach_phasor_contrast.png"
+    out = FIG_DIR / "1_teach_phasor_contrast.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote: {out}")

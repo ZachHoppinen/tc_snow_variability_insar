@@ -123,7 +123,7 @@ def main() -> None:
                     color=PAIR_COLORS[wy], zorder=5)
     ax.axhline(np.pi + 0.25, color="grey", lw=0.8, ls="--", alpha=0.6)
     ax.text(DSWE_MAX_CM - 0.5, np.pi + 0.32, "basin $\\Delta$SWE per lidar pair",
-            ha="right", va="bottom", fontsize=9, color="0.35", style="italic")
+            ha="right", va="bottom", fontsize=14, color="0.35", style="italic")
 
     ymin, ymax = -np.pi - 0.2, np.pi + 0.7 + 0.55 * n
     ax.set_ylim(ymin, ymax)
@@ -135,7 +135,7 @@ def main() -> None:
     ax.legend(loc="lower right", fontsize=10, framealpha=0.95)
     ax.grid(alpha=0.15)
 
-    out = FIG_DIR / "fig_phase_wraps_bands.png"
+    out = FIG_DIR / "2_phase_wraps_bands.png"
     fig.savefig(out, dpi=DPI, bbox_inches="tight")
     plt.close(fig)
     print(f"\nwrote: {out}")

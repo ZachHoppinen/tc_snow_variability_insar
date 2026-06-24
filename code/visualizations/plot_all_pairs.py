@@ -128,7 +128,7 @@ def main() -> None:
 
     fig.suptitle(f"ASO dSWE, |M|, and arg(M) at 81 m  ({BAND}-band)",
                  fontsize=15)
-    out = FIG_DIR / f"all_pairs_dswe_M_{BAND}.png"
+    out = FIG_DIR / f"4_all_pairs_dswe_M_{BAND}.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote {out}")

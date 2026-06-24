@@ -61,7 +61,7 @@ F_OVERSAMPLE = 1.287                      # single value, both resolutions (cali
 N_LOOKS_20, N_LOOKS_80 = 5 * 6, 13 * 16
 L_20, L_80 = N_LOOKS_20 / F_OVERSAMPLE, N_LOOKS_80 / F_OVERSAMPLE
 
-FIG_DIR = FIG_ROOT
+FIG_DIR = FIG_ROOT / "etc"
 COH_OUT = RAW_MAIN / "processed/nisar/coherence"     # raw + corrected GeoTIFFs
 
 

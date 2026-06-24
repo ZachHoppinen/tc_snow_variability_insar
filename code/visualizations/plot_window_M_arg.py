@@ -159,7 +159,7 @@ def main() -> None:
         axM.text(gw, 0.02, f" {gw} m", rotation=90, va="bottom", ha="right",
                  fontsize=9, color="0.4")
 
-    out = FIG_DIR / f"window_M_arg_vs_size_{BAND}.png"
+    out = FIG_DIR / f"5_window_M_arg_vs_size_{BAND}.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote {out}")

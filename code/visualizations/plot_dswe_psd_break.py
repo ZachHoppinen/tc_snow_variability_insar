@@ -56,7 +56,7 @@ def main():
     axe.set_xlabel("wavelength (m)")
     axe.set_ylabel("normalized PSD")
     axe.legend(fontsize=9, loc="lower left")
-    out = FIG_DIR / "dswe_psd_break.png"
+    out = FIG_DIR / "3_dswe_psd_break.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"wrote {out}")

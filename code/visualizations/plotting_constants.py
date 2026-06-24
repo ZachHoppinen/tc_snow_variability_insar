@@ -17,7 +17,7 @@ from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
 
 # --- shared paths -----------------------------------------------------------
 PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
-FIG_DIR = FIG_ROOT / "visualizations"
+FIG_DIR = FIG_ROOT
 
 # --- the four ASO pairs (water-year label, early flight, late flight) -------
 PAIRS = [

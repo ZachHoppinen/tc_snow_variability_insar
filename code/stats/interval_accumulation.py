@@ -46,7 +46,7 @@ INTERVALS = {                                 # the NISAR pairs (+ the 12-day pr
 FETCH_START, FETCH_END = "2025-11-21", "2026-01-16"   # pad around the windows
 
 STATS_DIR = Path(__file__).resolve().parent
-FIG_DIR = FIG_ROOT
+FIG_DIR = FIG_ROOT / "etc"
 
 
 def fetch_swe(station: str) -> pd.Series:

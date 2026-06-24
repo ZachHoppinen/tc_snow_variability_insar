@@ -88,26 +88,45 @@ pip install git+https://github.com/zmhoppinen/nisar_pytools
 
 ## Reproducing the figures and statistics
 
-With the environment active and `~/.netrc` set up, from `code/`:
+Activate the environment and point `TC_DATA_ROOT` at your data tree (it defaults
+to `./data`; figures default to `./figures`):
 
 ```bash
+conda activate nisar_pytools
 cd code
+export TC_DATA_ROOT="/path/to/nisar_swe/data"     # e.g. an external drive
+```
 
-# 1. ASO tier: raw flight zips -> per-pair ΔSWE -> per-window M
-./ASO/run_aso_pipeline.sh
+### Just the figures and statistics (from already-processed data)
 
-# 2. NISAR tier: fetch the two GUNWs from ASF, then calibrate + debias coherence
+These only *read* the processed data and write into `figures/`:
+
+```bash
+./make_all_figures.sh    # the 7 manuscript figures
+./run_stats.sh           # every reported number + the stats figures
+```
+
+Notes:
+- `run_stats.sh` also runs the NISAR ENL/coherence stat, which needs the two
+  GUNWs present under their original ASF names. If they are not on disk, fetch
+  them first: `python nisar/download/fetch_paper_gunws.py`. The script uses
+  `set -u` (not `-e`), so it otherwise continues past that one step.
+- Run a single section instead of all: `bash run_stats.sh 4.1` (sections are
+  listed in `STATS_MAP.md` and the `run_stats.sh` header).
+
+### Full reproduction from raw inputs
+
+This rebuilds the processed data and the supplementary gallery figures
+(`aso_dswe_*`, `aso_M_*`, `corrected_coherence_*`). These stages **write** into
+`TC_DATA_ROOT`, so point it at a working copy, not your master data:
+
+```bash
+./ASO/run_aso_pipeline.sh                # raw ASO zips -> ΔSWE -> M
 python nisar/download/fetch_paper_gunws.py
-bash nisar/generate_nisar_products.sh
-
-# 3. render the manuscript figures and the reported statistics
+bash nisar/generate_nisar_products.sh    # ENL calibration + debiased coherence
 ./make_all_figures.sh
 ./run_stats.sh
 ```
-
-By default this reads/writes inside the repo (`./data`, `./figures`). To run
-against data that lives elsewhere, set `TC_DATA_ROOT` (and optionally
-`TC_FIG_ROOT`) first.
 
 This pipeline has been verified to regenerate every figure in `figures/`
 pixel-for-pixel, including the NISAR coherence figures rebuilt from GUNWs

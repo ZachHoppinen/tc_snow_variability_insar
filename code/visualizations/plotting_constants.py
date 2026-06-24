@@ -6,15 +6,18 @@ color limits, per-pair and per-band colors, and output paths stay consistent
 across panels. Call apply_style() once at the top of main() before plotting.
 """
 
+import sys
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 
+# pull the repo-relative roots (code/ is one level up from visualizations/)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
+
 # --- shared paths -----------------------------------------------------------
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4/visualizations")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
+FIG_DIR = FIG_ROOT / "visualizations"
 
 # --- the four ASO pairs (water-year label, early flight, late flight) -------
 PAIRS = [

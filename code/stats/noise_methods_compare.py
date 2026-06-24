@@ -31,13 +31,14 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "ASO"))
+sys.path.insert(0, str(HERE.parent))  # repo code/ dir
 from aso_M_calculation import BANDS, PREAVG, kappa_of, load_dswe, preaverage  # noqa: E402
 from aso_noise import calm_mask, coarse_window_fields, detrended_noise  # noqa: E402
+from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
 
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4/stats")
-DSD_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/sub_pixel_variability/"
-               "processed/aso/2025Feb08-09_2025Feb25/dsd")
+FIG_DIR = FIG_ROOT / "stats"
+DSD_DIR = DATA_ROOT / ("sub_pixel_variability/"
+                       "processed/aso/2025Feb08-09_2025Feb25/dsd")
 DEPTH_A = DSD_DIR / "ASO_Tuolumne_2025Feb08-09_snowdepth_3m.tif"
 DEPTH_B = DSD_DIR / "ASO_Tuolumne_2025Feb25_snowdepth_3m.tif"
 PAIR = ("WY2025", "2025Feb08-09", "2025Feb25")

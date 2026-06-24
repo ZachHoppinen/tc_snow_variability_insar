@@ -33,12 +33,12 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)   # empty-slice windo
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "ASO"))
+sys.path.insert(0, str(HERE.parent))  # repo code/ dir
 from aso_M_calculation import kappa_of, PREAVG, BLOCK, MIN_FRAC, BANDS  # noqa: E402
+from tc_paths import DATA_ROOT  # noqa: E402
 
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
-DEM_TIF = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-               "sub_pixel_variability/raw/nisar/dem.tif")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
+DEM_TIF = DATA_ROOT / "sub_pixel_variability/raw/nisar/dem.tif"
 PAIRS = [
     ("WY2023", "2023Mar02-03",    "2023Mar16-17"),
     ("WY2024", "2024Jan29",       "2024Feb27-28"),

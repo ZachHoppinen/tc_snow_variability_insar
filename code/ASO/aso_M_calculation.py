@@ -37,12 +37,14 @@ import numpy as np
 import rioxarray  # noqa: F401  (registers the .rio accessor)
 import xarray as xr
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
+
 # --- paths ------------------------------------------------------------------
 # Per-pair folders written by aso_pairwise_dswe.py: each holds aso_dswe_3m.nc.
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
+FIG_DIR = FIG_ROOT
 
 # (water-year label, early flight, late flight) -- same pairs as upstream.
 PAIRS = [

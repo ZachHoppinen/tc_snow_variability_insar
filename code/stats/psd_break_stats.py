@@ -36,10 +36,11 @@ import xarray as xr
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "ASO"))
+sys.path.insert(0, str(HERE.parent))  # repo code/ dir
 from aso_M_calculation import load_dswe, BASE_RES_M  # noqa: E402
+from tc_paths import DATA_ROOT  # noqa: E402
 
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
 MASK_3M = PROCESSED_DIR / "common_snow_mask_3m.tif"
 
 PAIRS = [("WY2023", "2023Mar02-03", "2023Mar16-17"),

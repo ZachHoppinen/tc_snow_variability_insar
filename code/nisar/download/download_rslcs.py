@@ -1,8 +1,13 @@
 """Download the two NISAR RSLCs that form the 2025-12-31 -> 2026-01-12
 interferometric pair on descending path 042 over the Tuolumne ASO AOI.
 
+NOTE: these RSLCs are NOT needed to reproduce the paper -- its NISAR coherence
+analysis uses two delivered GUNWs directly (see fetch_paper_gunws.py); no SAS
+run on RSLCs is involved. This script is kept only to document how the RSLCs
+used in exploratory closure tests were obtained.
+
 Pulls from ASF via nisar_pytools and writes to
-``nisar_swe/data/nisar/rslc/tuolome/``. Existing files are skipped.
+``DATA_ROOT/nisar/rslc/tuolome/``. Existing files are skipped.
 Requires Earthdata Login credentials in ``~/.netrc``.
 
 Run with the ``nisar_pytools`` conda env, e.g.:
@@ -11,9 +16,14 @@ Run with the ``nisar_pytools`` conda env, e.g.:
     python download_rslcs.py
 """
 
+import sys
 from pathlib import Path
 
 from nisar_pytools import download_urls, find_nisar
+
+# repo-relative data root (code/nisar/download/ -> code/ is two levels up)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tc_paths import DATA_ROOT  # noqa: E402
 
 # Tuolumne ASO lidar bounds (EPSG:4326), same AOI as the GUNW download
 # script so the RSLC frame fully covers the basin.
@@ -25,7 +35,7 @@ AOI = [-120.288, 37.714, -119.191, 38.241]   # [W, S, E, N]
 START = "2025-12-28"
 END = "2026-01-15"
 PATH = 42                                      # descending track 042
-OUT_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/nisar/rslc/tuolome")
+OUT_DIR = DATA_ROOT / "nisar/rslc/tuolome"
 
 
 def main() -> None:

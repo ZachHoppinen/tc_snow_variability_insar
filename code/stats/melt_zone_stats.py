@@ -23,10 +23,11 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent))  # repo code/ dir
 from aso_M_stats import window_stats  # noqa: E402
+from tc_paths import FIG_ROOT  # noqa: E402
 
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4/stats")
+FIG_DIR = FIG_ROOT / "stats"
 PAIR = ("2023Mar02-03", "2023Mar16-17")     # WY2023 melt pair
 
 

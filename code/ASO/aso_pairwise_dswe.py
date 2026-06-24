@@ -33,14 +33,16 @@ import rioxarray  # noqa: F401  (registers the .rio accessor)
 import xarray as xr
 from rasterio.enums import Resampling
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
+
 # --- paths ------------------------------------------------------------------
 # Per-pair flight rasters laid out by prep_aso.py:
 #   PROCESSED_DIR/{date_a}_{date_b}/dswe/*_swe_50m.tif
 #   PROCESSED_DIR/{date_a}_{date_b}/dsd/*_snowdepth_{3,50}m.tif
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
+FIG_DIR = FIG_ROOT
 
 # product suffix -> the prep_aso subdir it lives in
 SUBDIR = {"swe_50m.tif": "dswe",

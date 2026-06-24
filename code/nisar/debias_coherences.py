@@ -37,24 +37,31 @@ from scipy.interpolate import interp1d
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from calibrate_enl import read_coh, forward_curve  # noqa: E402
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
+
 # ============================================================================
 # inputs + the single calibrated oversampling factor
 # ============================================================================
-RAW_MAIN = Path("/Users/zmhoppinen/Documents/nisar_swe/data/sub_pixel_variability")
+RAW_MAIN = DATA_ROOT / "sub_pixel_variability"
 GUNW_DIR = RAW_MAIN / "raw/nisar/gunw"
-PAIRS = {                                  # the two delivered standard GUNWs
-    "P12": ("GUNW_P12_20251207_20251219.h5", "2025-12-07 -> 2025-12-19"),
-    "P23": ("GUNW_P23_20251219_20251231.h5", "2025-12-19 -> 2025-12-31"),
+PAIRS = {                                  # the two delivered standard GUNWs,
+                                           # by their original ASF product names
+    "P12": ("NISAR_L2_PR_GUNW_007_042_D_069_008_4000_SH_20251207T025607_"
+            "20251207T025642_20251219T025608_20251219T025642_X05010_N_F_J_001.h5",
+            "2025-12-07 -> 2025-12-19"),
+    "P23": ("NISAR_L2_PR_GUNW_008_042_D_069_009_4000_SH_20251219T025608_"
+            "20251219T025642_20251231T025608_20251231T025643_X05010_N_F_J_001.h5",
+            "2025-12-19 -> 2025-12-31"),
 }
-WATER_MASK = (Path(__file__).resolve().parent.parent.parent
+WATER_MASK = (Path(__file__).resolve().parent.parent
               / "cache/tuolome_water_mask_worldcover_80m.tif")
 
 F_OVERSAMPLE = 1.287                      # single value, both resolutions (calibrate_enl.py)
 N_LOOKS_20, N_LOOKS_80 = 5 * 6, 13 * 16
 L_20, L_80 = N_LOOKS_20 / F_OVERSAMPLE, N_LOOKS_80 / F_OVERSAMPLE
 
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4")
+FIG_DIR = FIG_ROOT
 COH_OUT = RAW_MAIN / "processed/nisar/coherence"     # raw + corrected GeoTIFFs
 
 

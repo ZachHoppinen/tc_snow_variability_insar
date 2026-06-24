@@ -37,8 +37,11 @@ import rioxarray  # noqa: F401
 import xarray as xr
 from rasterio.enums import Resampling
 
-COH_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-               "sub_pixel_variability/processed/nisar/coherence")
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT  # noqa: E402
+
+COH_DIR = DATA_ROOT / "sub_pixel_variability/processed/nisar/coherence"
 from plotting_constants import (  # noqa: E402
     apply_style, DPI, PROCESSED_DIR, FIG_DIR, CMAP_COH, CMAP_COHDIFF, CMAP_NISAR_COH)
 

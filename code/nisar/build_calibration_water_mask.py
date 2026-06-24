@@ -23,9 +23,12 @@ import rioxarray  # noqa: F401
 import xarray as xr
 from rasterio.enums import Resampling
 
-DATA = Path("/Users/zmhoppinen/Documents/nisar_swe/data")
-CACHE = Path("/Users/zmhoppinen/Documents/nisar_swe/projects/"
-             "theoretical_sweramp_unwrapping_coherence/cache")
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT  # noqa: E402
+
+DATA = DATA_ROOT
+CACHE = Path(__file__).resolve().parents[1] / "cache"
 # all v4 outputs live under the sub_pixel_variability data tree
 OUT_DIR = DATA / "sub_pixel_variability/processed/calibration"
 

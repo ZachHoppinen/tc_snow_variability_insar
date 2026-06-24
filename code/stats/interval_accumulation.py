@@ -22,6 +22,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import FIG_ROOT  # noqa: E402
+
 # ============================================================================
 # Tuolumne-basin CDEC snow pillows (edit here to add/drop stations)
 # ============================================================================
@@ -42,8 +46,7 @@ INTERVALS = {                                 # the NISAR pairs (+ the 12-day pr
 FETCH_START, FETCH_END = "2025-11-21", "2026-01-16"   # pad around the windows
 
 STATS_DIR = Path(__file__).resolve().parent
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4")
+FIG_DIR = FIG_ROOT
 
 
 def fetch_swe(station: str) -> pd.Series:

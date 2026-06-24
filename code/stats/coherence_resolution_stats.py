@@ -25,14 +25,15 @@ import rioxarray  # noqa: F401
 import xarray as xr
 from rasterio.enums import Resampling
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT  # noqa: E402
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-COH_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-               "sub_pixel_variability/processed/nisar/coherence")
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
-DEM_TIF = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-               "sub_pixel_variability/raw/nisar/dem.tif")
+COH_DIR = DATA_ROOT / "sub_pixel_variability/processed/nisar/coherence"
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
+DEM_TIF = DATA_ROOT / "sub_pixel_variability/raw/nisar/dem.tif"
 SNOW_PAIR = ("2025Feb08-09", "2025Feb25")     # ASO footprint used as snow mask
 PAIRS = [("P12", "7-19 Dec, low snow"), ("P23", "19-31 Dec, large storm")]
 F = 4                                    # 20 m -> 80 m block factor

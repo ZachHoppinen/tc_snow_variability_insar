@@ -18,12 +18,15 @@ import numpy as np
 import xarray as xr
 from scipy.ndimage import gaussian_filter
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT  # noqa: E402
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 SMOOTH_SIGMA = 3            # px (~240 m at 81 m) for the smoothed-arg test
 
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
 PAIRS = [("WY2023", "2023Mar02-03_2023Mar16-17"),
          ("WY2024", "2024Jan29_2024Feb27-28"),
          ("WY2025", "2025Feb08-09_2025Feb25"),

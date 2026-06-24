@@ -28,11 +28,13 @@ from pathlib import Path
 
 import rasterio
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+from tc_paths import DATA_ROOT  # noqa: E402
+
 BASIN = "Tuolumne"
-RAW_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-               "sub_pixel_variability/raw/aso")
-PROCESSED_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/data/"
-                     "sub_pixel_variability/processed/aso")
+RAW_DIR = DATA_ROOT / "sub_pixel_variability/raw/aso"
+PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
 
 # (early flight, late flight) date tokens -- the four Tuolumne accumulation
 # pairs, same tokens aso_pairwise_dswe.py uses.

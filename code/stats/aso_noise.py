@@ -48,13 +48,14 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)   # all-NaN slices
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "ASO"))
+sys.path.insert(0, str(HERE.parent))  # repo code/ dir
 from aso_M_calculation import (  # noqa: E402
     BANDS, BLOCK, MIN_FRAC, PAIRS, PROCESSED_DIR,
     kappa_of, load_dswe, preaverage, window_M,
 )
+from tc_paths import FIG_ROOT  # noqa: E402
 
-FIG_DIR = Path("/Users/zmhoppinen/Documents/nisar_swe/figures/"
-               "ASO_sweramp_unwrapping_coherence/v4/stats")
+FIG_DIR = FIG_ROOT / "stats"
 
 MIN_CELLS = int(np.ceil(MIN_FRAC * BLOCK * BLOCK))   # >= 41 of 81 cells valid
 

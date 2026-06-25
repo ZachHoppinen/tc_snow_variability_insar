@@ -95,7 +95,7 @@ def main() -> None:
                                     hspace=0.01, wspace=0.04)
     col_titles = [r"$\Delta$SWE (cm)", "|M| - coherence factor",
                   "arg(M) - phase bias"]
-    cbar_labels = [r"$\Delta$SWE (cm)", "Coherence ()", "Phase Bias (deg)"]
+    cbar_labels = [r"$\Delta$SWE (cm)", "Coherence", "Phase Bias (deg)"]
     im_by_col = [None, None, None]
     for r, (wy, dswe, absM, argM, ext_m, org_m, gap) in enumerate(data):
         ext_d, org_d = extent_origin(dswe)

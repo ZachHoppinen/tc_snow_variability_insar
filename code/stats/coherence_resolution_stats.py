@@ -27,7 +27,9 @@ from rasterio.enums import Resampling
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "nisar"))  # debias helpers
 from tc_paths import DATA_ROOT  # noqa: E402
+from debias_coherences import debiaser, L_20  # noqa: E402  (shared Bamler inversion)
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
@@ -88,11 +90,20 @@ def main() -> None:
         snow = snow_mask_on(c80_da)                                # snow on 80 m grid
         r20 = read(f"{prefix}_coherence_raw_20m.tif")
         r80 = read(f"{prefix}_coherence_raw_80m.tif")
-        c20 = read(f"{prefix}_coherence_corrected_20m.tif")
         c80 = c80_da.values
 
+        # average-then-debias (calibration-consistent: f / L_20 were calibrated on
+        # the 20 m coherence AVERAGED to the 80 m grid, so de-bias that average,
+        # not native 20 m pixels -- the latter under-corrects and leaves a ~+0.03
+        # bias over open water where the true gap is zero).
+        deb20 = debiaser(L_20, gmax=0.97)
+        avg20 = coarsen4(r20)                   # raw 20 m block-averaged to 80 m
+        c20 = np.full_like(avg20, np.nan)
+        fin = np.isfinite(avg20)
+        c20[fin] = deb20(avg20[fin])            # then de-bias at L_20 (on 80 m grid)
+
         raw_gap = coarsen4(r20) - r80          # both on the native 80 m grid
-        corr_gap = coarsen4(c20) - c80
+        corr_gap = c20 - c80                    # de-biased 20 m (on 80 m) - de-biased 80 m
 
         print(f"\n=== {prefix} ({label}) ===")
         print("  " + summ("raw  gamma_20 (20m)", r20))

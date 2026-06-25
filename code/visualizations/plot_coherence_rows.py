@@ -39,14 +39,16 @@ from rasterio.enums import Resampling
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo code/ dir
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "nisar"))  # debias helpers
 from tc_paths import DATA_ROOT  # noqa: E402
+from debias_coherences import debiaser, L_20  # noqa: E402  (shared Bamler inversion)
 
 COH_DIR = DATA_ROOT / "sub_pixel_variability/processed/nisar/coherence"
 from plotting_constants import (  # noqa: E402
     apply_style, DPI, PROCESSED_DIR, FIG_DIR, CMAP_COH, CMAP_COHDIFF, CMAP_NISAR_COH)
 
 ASO_PAIR = ("2025Feb08-09", "2025Feb25")          # |M| panel source (WY2025)
-NISAR_MASK_PAIR = ("2023Mar02-03", "2023Mar16-17")  # footprint to mask NISAR (WY2023)
+NISAR_MASK_PAIR = ASO_PAIR                          # mask NISAR to the same WY2025 footprint
 BAND = "L"
 ROWS = [("P12", "December 7-19, 2025\n(no accumulation)"),
         ("P23", "December 19-31, 2025\n(large storm)")]
@@ -81,6 +83,34 @@ def reproj(name: str, template: xr.DataArray) -> np.ndarray:
     return da.rio.reproject_match(template, resampling=Resampling.average).values
 
 
+_DEB20 = debiaser(L_20, gmax=0.97)
+
+
+def coarsen4(a: np.ndarray) -> np.ndarray:
+    """NaN-safe 4x4 block mean: native 20 m grid -> aligned 80 m grid."""
+    ny, nx = (a.shape[0] // 4) * 4, (a.shape[1] // 4) * 4
+    return np.nanmean(a[:ny, :nx].reshape(ny // 4, 4, nx // 4, 4), axis=(1, 3))
+
+
+def ad_diff(prefix: str, template: xr.DataArray) -> np.ndarray:
+    """Corrected dgamma via average-then-debias (calibration-consistent): block-
+    average the raw 20 m to the 80 m grid, de-bias at L_20, subtract the de-biased
+    80 m, then reproject onto the display template. (De-biasing native 20 m pixels
+    instead leaves a ~+0.03 bias over open water.)"""
+    with rioxarray.open_rasterio(COH_DIR / f"{prefix}_coherence_raw_20m.tif",
+                                 masked=True) as d:
+        r20 = d.squeeze(drop=True).load().values
+    with rioxarray.open_rasterio(COH_DIR / f"{prefix}_coherence_corrected_80m.tif",
+                                 masked=True) as d:
+        c80da = d.squeeze(drop=True).load()
+    avg = coarsen4(r20)
+    c20 = np.full_like(avg, np.nan)
+    fin = np.isfinite(avg)
+    c20[fin] = _DEB20(avg[fin])
+    dgda = c80da.copy(data=(c20 - c80da.values))
+    return dgda.rio.reproject_match(template, resampling=Resampling.average).values
+
+
 def main() -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     apply_style()
@@ -88,21 +118,20 @@ def main() -> None:
     template = load_absM(ASO_PAIR, BAND)         # |M| panel (WY2025)
     absM = template.values
     maskM = np.isfinite(absM)                    # |M| footprint (WY2025)
-    maskN = np.isfinite(load_absM(NISAR_MASK_PAIR, BAND).values)  # NISAR mask (WY2023)
+    maskN = np.isfinite(load_absM(NISAR_MASK_PAIR, BAND).values)  # NISAR footprint (WY2025, = |M| footprint)
 
     # gather per-row panels on the shared grid
     panels = []      # (row_label, gamma80, corrected_diff)
     for prefix, label in ROWS:
         g80 = reproj(f"{prefix}_coherence_raw_80m.tif", template)
-        c20 = reproj(f"{prefix}_coherence_corrected_20m.tif", template)
-        c80 = reproj(f"{prefix}_coherence_corrected_80m.tif", template)
-        panels.append((label, g80, c20 - c80))
+        diff = ad_diff(prefix, template)         # average-then-debias dgamma
+        panels.append((label, g80, diff))
 
-    # NISAR coverage within the WY2023 mask
+    # NISAR coverage within the WY2025 mask
     nisar_cov = maskN.copy()
     for _, g80, _ in panels:
         nisar_cov = nisar_cov & np.isfinite(g80)
-    # crop to the union of the NISAR (WY2023) and |M| (WY2025) footprints
+    # crop to the WY2025 footprint (NISAR and |M| share it)
     cov = nisar_cov | maskM
     rows_i = np.where(cov.any(axis=1))[0]
     cols_i = np.where(cov.any(axis=0))[0]

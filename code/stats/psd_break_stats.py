@@ -109,7 +109,7 @@ def fit_break(wl, logp_or_p, weights, is_log=False):
     wmean = np.sum(weights[use] * y) / np.sum(weights[use])
     sst = np.sum(weights[use] * (y - wmean) ** 2)
     best = None
-    for lam in np.linspace(*BREAK_SCAN, 50):
+    for lam in np.linspace(*BREAK_SCAN, 400):
         xb = np.log(lam)
         if (x < xb).sum() < 3 or (x > xb).sum() < 3:
             continue

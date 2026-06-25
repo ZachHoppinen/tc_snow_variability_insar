@@ -82,7 +82,7 @@ def main() -> None:
     axes[1, 0].set_ylabel("arg(M) - phase bias\nNorthing (km)")
 
     fig.colorbar(im_abs, ax=axes[0, :], location="right", shrink=0.85,
-                 pad=0.02, label="Coherence ()")
+                 pad=0.02, label="Coherence")
     fig.colorbar(im_arg, ax=axes[1, :], location="right", shrink=0.85,
                  pad=0.02, label="Phase Bias (deg)")
 

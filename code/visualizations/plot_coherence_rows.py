@@ -47,8 +47,8 @@ COH_DIR = DATA_ROOT / "sub_pixel_variability/processed/nisar/coherence"
 from plotting_constants import (  # noqa: E402
     apply_style, DPI, PROCESSED_DIR, FIG_DIR, CMAP_COH, CMAP_COHDIFF, CMAP_NISAR_COH)
 
-ASO_PAIR = ("2025Feb08-09", "2025Feb25")          # |M| panel source (WY2025)
-NISAR_MASK_PAIR = ASO_PAIR                          # mask NISAR to the same WY2025 footprint
+ASO_PAIR = ("2023Mar02-03", "2023Mar16-17")        # |M| panel source (WY2023, largest footprint)
+NISAR_MASK_PAIR = ASO_PAIR                          # mask NISAR to the same WY2023 footprint
 BAND = "L"
 ROWS = [("P12", "December 7-19, 2025\n(no accumulation)"),
         ("P23", "December 19-31, 2025\n(large storm)")]

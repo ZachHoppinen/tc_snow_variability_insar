@@ -22,7 +22,7 @@ pair) and summarised as median and IQR. arg(M) is shown for usable windows only
 (|M| > USABLE_M), mirroring operational coherence masking; below that threshold
 arg(M) is near-uniform over (-pi, pi] and carries no recoverable signal.
 
-Two stacked panels: top |M|, bottom arg(M) in L-band mm SWE. L-band (NISAR).
+Two side-by-side panels: left |M|, right arg(M) in L-band mm SWE. L-band (NISAR).
 """
 
 from __future__ import annotations
@@ -135,13 +135,14 @@ def main() -> None:
     Ap = np.array([pctiles_from_hist(Ahist[si], A_EDGES, [25, 50, 75])
                    for si in range(nsz)]) / KAPPA * 1000.0     # rad -> mm SWE
 
-    fig, (axM, axA) = plt.subplots(2, 1, figsize=(7.5, 7.2), sharex=True,
+    fig, (axM, axA) = plt.subplots(1, 2, figsize=(11.5, 4.2), sharex=True,
                                    constrained_layout=True)
 
     axM.fill_between(SIZES_M, Mp[:, 0], Mp[:, 2], color=COLOR_M, alpha=0.2,
                      label="IQR")
     axM.plot(SIZES_M, Mp[:, 1], "o-", color=COLOR_M, lw=2, ms=5, label="median")
     axM.set_ylabel("|M|  (coherence factor)")
+    axM.set_xlabel("multilook window size (m)")
     axM.set_ylim(0, 1.0)
     axM.legend(loc="upper right", frameon=False)
 

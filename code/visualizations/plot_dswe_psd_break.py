@@ -29,7 +29,7 @@ def main():
     wl, use, specs, mean_lp = R["wl"], R["use"], R["specs"], R["mean_lp"]
     mlam, mbs, mbl, mcoef = R["mlam"], R["mbs"], R["mbl"], R["mcoef"]
 
-    fig, axe = plt.subplots(figsize=(8, 6), constrained_layout=True)
+    fig, axe = plt.subplots(figsize=(12, 4.5), constrained_layout=True)
     for j in range(len(specs)):                    # every window, faint
         axe.loglog(wl[use], np.exp(specs[j][use]), color="0.45", lw=0.5, alpha=0.12)
     axe.loglog(wl[use], np.exp(mean_lp[use]), color="tab:blue", lw=4.5,

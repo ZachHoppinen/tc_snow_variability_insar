@@ -36,7 +36,13 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 COH_DIR = DATA_ROOT / "sub_pixel_variability/processed/nisar/coherence"
 PROCESSED_DIR = DATA_ROOT / "sub_pixel_variability/processed/aso"
 DEM_TIF = DATA_ROOT / "sub_pixel_variability/raw/nisar/dem.tif"
-SNOW_PAIR = ("2025Feb08-09", "2025Feb25")     # ASO footprint used as snow mask
+# common snow footprint: pixels with valid |M| in ALL four ASO pairs (per-pixel
+# intersection), so every reported snow pixel is consistently snow-covered across
+# all four winters.
+ASO_PAIRS = [("2023Mar02-03", "2023Mar16-17"),
+             ("2024Jan29", "2024Feb27-28"),
+             ("2025Feb08-09", "2025Feb25"),
+             ("2026Jan31-Feb01", "2026Feb27-28")]
 PAIRS = [("P12", "7-19 Dec, low snow"), ("P23", "19-31 Dec, large storm")]
 F = 4                                    # 20 m -> 80 m block factor
 
@@ -52,12 +58,20 @@ def read_da(name: str) -> xr.DataArray:
 
 
 def snow_mask_on(template: xr.DataArray) -> np.ndarray:
-    """ASO snow footprint reprojected (nearest) onto the NISAR 80 m grid.
-    Only the binary mask is reprojected; the coherence is never resampled."""
-    pdir = PROCESSED_DIR / f"{SNOW_PAIR[0]}_{SNOW_PAIR[1]}"
-    with xr.open_dataset(pdir / "aso_M_81m_L.nc") as ds:
-        fp = np.isfinite(ds["M_real"].values).astype(np.float32)
-        da = xr.DataArray(fp, dims=ds["M_real"].dims, coords=ds["M_real"].coords)
+    """Common 4-pair ASO snow footprint reprojected (nearest) onto the NISAR
+    80 m grid: pixels with valid |M| in ALL four pairs (per-pixel AND on the
+    shared 81 m grid). Only the binary mask is reprojected; coherence is never
+    resampled."""
+    common, coords, dims = None, None, None
+    for a, b in ASO_PAIRS:
+        with xr.open_dataset(PROCESSED_DIR / f"{a}_{b}" / "aso_M_81m_L.nc") as ds:
+            m = ds["M_real"]
+            fin = np.isfinite(m.values)
+            if coords is None:                    # all four share one 81 m grid
+                dims = m.dims
+                coords = {d: m[d].values.copy() for d in m.dims}
+        common = fin if common is None else (common & fin)
+    da = xr.DataArray(common.astype(np.float32), dims=dims, coords=coords)
     da.rio.write_crs("EPSG:32611", inplace=True)
     return da.rio.reproject_match(template, resampling=Resampling.nearest).values > 0.5
 
@@ -110,8 +124,8 @@ def main() -> None:
         print("  " + summ("raw  gamma_80 (80m)", r80))
         print("  " + summ("corr gamma_20 (20m)", c20))
         print("  " + summ("corr gamma_80 (80m)", c80))
-        for tag, mask in [("FULL scene", np.ones_like(corr_gap, bool)),
-                          ("SNOW only ", snow)]:
+        for tag, mask in [("FULL scene ", np.ones_like(corr_gap, bool)),
+                          ("COMMON snow", snow)]:
             rg, cgp = raw_gap[mask], corr_gap[mask]
             cgf = cgp[np.isfinite(cgp)]
             print(f"  [{tag}]  raw gap: median={np.nanmedian(rg):+.3f}  "
@@ -126,7 +140,7 @@ def main() -> None:
         m = snow & np.isfinite(corr_gap) & np.isfinite(elev)
         e, cg, g80 = elev[m], corr_gap[m], r80[m]   # raw 80 m coherence for context
         edges = np.percentile(e, [0, 20, 40, 60, 80, 100])
-        print("  [SNOW] corr dgamma by elevation quintile "
+        print("  [COMMON snow] corr dgamma by elevation quintile "
               "(median / p75 / p90):")
         for i in range(5):
             lo, hi = edges[i], edges[i + 1]

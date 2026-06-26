@@ -1,11 +1,12 @@
 """Fetch VIIRS VNP10A1F snow cover for the two NISAR pair windows (Appendix B).
 
 Downloads the VIIRS/NPP CGF Snow Cover Daily L3 375 m product (VNP10A1F,
-Version 2; Riggs & Hall 2022, NSIDC DAAC, doi:10.5067/PN50Y51IVNLE) for three
-dates spanning each NISAR pair's temporal baseline:
+Version 2; Riggs & Hall 2022, NSIDC DAAC, doi:10.5067/PN50Y51IVNLE) for the end
+date of each NISAR pair's temporal baseline (the snow extent established over the
+pair, which the accumulating storm only fully reaches at the end):
 
-    P12 (no accumulation) : 2025-12-07, 2025-12-13, 2025-12-19
-    P23 (large storm)     : 2025-12-19, 2025-12-25, 2025-12-31
+    P12 (no accumulation) : 2025-12-19
+    P23 (large storm)     : 2025-12-31
 
 Each granule (sinusoidal tile h08v05, which covers Tuolumne) is written as a
 CRS-tagged GeoTIFF to DATA_ROOT/sub_pixel_variability/raw/viirs/ as
@@ -32,10 +33,10 @@ from tc_paths import DATA_ROOT  # noqa: E402
 
 AOI_LL = [-120.288, 37.714, -119.191, 38.241]   # [W, S, E, N], Tuolumne ASO bounds
 SHORT_NAME = "VNP10A1F"
-# three dates per pair spanning its temporal baseline (must match the windows in
+# end date of each pair's temporal baseline (must match the dates in
 # stats/viirs_snowcover_stats.py)
-PAIR_WINDOWS = {"p12": ["2025-12-07", "2025-12-13", "2025-12-19"],
-                "p23": ["2025-12-19", "2025-12-25", "2025-12-31"]}
+PAIR_WINDOWS = {"p12": ["2025-12-19"],
+                "p23": ["2025-12-31"]}
 VIIRS_DIR = DATA_ROOT / "sub_pixel_variability/raw/viirs"
 
 # VIIRS sinusoidal grid geometry for tile h08v05 (the one covering Tuolumne).

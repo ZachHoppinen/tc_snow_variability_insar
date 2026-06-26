@@ -20,10 +20,11 @@ Core dependency: all ASO `|M|` stats import the M pipeline + constants
 | **subsec:psd / R(PSD)** | per-window dSWE PSD break: median 27 m (IQR 22-31, 570 windows), small-scale beta 2.6 / large-scale beta 1.5, 88% in Deems 15-40 m, per-pair 22-27 m, 0% at scan floor | `stats/psd_break_stats.py` (mode-weighted WLS, amplitude-normalized, per-pair) | **confirmed**; in v4.tex |
 | **R(window sizes)** | pooled median \|M\| 0.54 at 9 m / 0.33 at ~20 m / 0.18 at 81 m; IQR 0.07-0.38 at 81 m; bias med <=0.3 mm, IQR ~+/-2 mm (\|M\|>0.3) | `stats/window_size_stats.py` (uses `exploratory/window_size_sweep.py` helpers) | **confirmed** (0.542 / 0.348@18m-0.319@21m / 0.183; IQR 0.070-0.381; bias med max +0.26 mm, IQR -1.2 to +2.3 mm) |
 | **R4.2** | C \|M\| 0.10 (0.06-0.14) 53% <0.1, arg -86/+88; L 0.31 (0.15-0.55) 14%, arg -15/+19; P 0.87 (0.65-0.94) <1%, arg -1.6/+0.3; pooled 0.10/0.33/0.88 | `stats/stats_frequencies.py` | **confirmed** |
-| **R4.3** | corrected dgamma: P12 med -0.005 (43% +), P23 +0.022 (66% +); raw gap P23 +0.072; p90 ~0.12, g80 0.16 (high) vs 0.27 (low) | `stats/coherence_resolution_stats.py` | **confirmed** |
+| **R4.3** | corrected dgamma over the common 4-pair snow footprint: P12 med -0.004 (45% +), P23 +0.031 (71% +); raw gap P23 +0.072; p90 ~0.13, g80 0.17 (high) vs 0.27 (low) | `stats/coherence_resolution_stats.py` (4-pair intersection mask) | **confirmed** |
 | **D4.1** | melt \|M\| 0.55 vs accum 0.32; within-win sigma 2.4 vs 3.7; matched-magnitude | `stats/melt_zone_stats.py` | confirmed (session) |
 | **D4.5** | constant vs variable density: \|M\| shift <=0.03, Pearson r 0.91-0.98, arg <2 deg | `stats/stats_constant_density.py` | confirmed (session) |
 | **D4.5** | noise: PSD 1.7 cm/3 m -> 0.5 cm/9 m; bare ground 1.6 cm/3 m; noise-only \|M\| 0.45/0.96/1.00 (C/L/P) | `stats/noise_methods_compare.py` | confirmed (session) |
+| **App. B** | VIIRS VNP10A1F snow cover vs corrected dgamma (WY2023 footprint): P12 r +0.10 / rho +0.12 (snow 11%); P23 r +0.35 / rho +0.40 (snow 23%); footprint fully snow-covered | `stats/viirs_snowcover_stats.py` -> fig `visualizations/plot_viirs_snowcover.py` (B1) | **confirmed** (session) |
 
 ## Figure scripts (visualizations/)
 

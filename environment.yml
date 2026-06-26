@@ -49,6 +49,9 @@ dependencies:
   - asf_search
   - hyp3-sdk
 
+  # VIIRS snow-cover fetch (Appendix B, viirs/fetch_viirs_snowcover.py)
+  - earthaccess
+
   # Frostbyte helper transitive imports
   - networkx
   - python-dateutil

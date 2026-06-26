@@ -13,6 +13,7 @@ code/
   ASO/              ASO lidar -> per-pair ΔSWE and the per-window factor M
   nisar/            ENL calibration + coherence debiasing from delivered GUNWs
     download/       fetch the GUNWs (and RSLCs) from ASF
+  viirs/            fetch VIIRS VNP10A1F snow cover (Appendix B cross-check)
   stats/            statistics reported in the paper
   visualizations/   the figure scripts (plus shared plotting_constants.py)
   cache/            small WorldCover water mask (a required NISAR-tier input)
@@ -102,7 +103,7 @@ export TC_DATA_ROOT="/path/to/nisar_swe/data"     # e.g. an external drive
 These only *read* the processed data and write into `figures/`:
 
 ```bash
-./make_all_figures.sh    # the 7 manuscript figures
+./make_all_figures.sh    # the 7 manuscript figures + the appendix figure (B1)
 ./run_stats.sh           # every reported number + the stats figures
 ```
 
@@ -111,6 +112,9 @@ Notes:
   GUNWs present under their original ASF names. If they are not on disk, fetch
   them first: `python nisar/download/fetch_paper_gunws.py`. The script uses
   `set -u` (not `-e`), so it otherwise continues past that one step.
+- The appendix figure (B1) needs the VIIRS snow-cover tiles under
+  `raw/viirs/`. If they are not on disk, fetch them first:
+  `python viirs/fetch_viirs_snowcover.py` (needs Earthdata Login in `~/.netrc`).
 - Run a single section instead of all: `bash run_stats.sh 4.1` (sections are
   listed in `STATS_MAP.md` and the `run_stats.sh` header).
 
@@ -124,6 +128,7 @@ This rebuilds the processed data and the supplementary gallery figures
 ./ASO/run_aso_pipeline.sh                # raw ASO zips -> ΔSWE -> M
 python nisar/download/fetch_paper_gunws.py
 bash nisar/generate_nisar_products.sh    # ENL calibration + debiased coherence
+python viirs/fetch_viirs_snowcover.py    # VIIRS snow cover for Appendix B
 ./make_all_figures.sh
 ./run_stats.sh
 ```

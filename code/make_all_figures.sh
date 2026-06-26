@@ -32,6 +32,9 @@ run visualizations/plot_coherence_rows.py
 run visualizations/plot_window_M_arg.py
 run visualizations/plot_dswe_psd_break.py
 
+# appendix figures (require raw/viirs/ -- run viirs/fetch_viirs_snowcover.py first)
+run visualizations/plot_viirs_snowcover.py
+
 # copy the numbered paper figures into the manuscript (respects TC_FIG_ROOT)
 FIG_ROOT="${TC_FIG_ROOT:-${HERE}/../figures}"
 MANUSCRIPT_FIGS="${HERE}/../manuscript/figures"
@@ -40,6 +43,7 @@ echo "=================================================================="
 echo ">> copying paper figures -> manuscript/figures/"
 echo "=================================================================="
 cp "${FIG_ROOT}"/[1-7]_*.png "${MANUSCRIPT_FIGS}/"
+cp "${FIG_ROOT}"/B[0-9]_*.png "${MANUSCRIPT_FIGS}/"   # appendix figures (B1, ...)
 
 echo
 echo "all v4 figures complete."

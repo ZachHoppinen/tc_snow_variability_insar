@@ -1,5 +1,7 @@
 # Snow accumulation variability limits InSAR SWE retrieval
 
+Preprint: https://egusphere.copernicus.org/preprints/2026/egusphere-2026-3772/
+
 Companion code and manuscript for the study of how sub-resolution snow
 accumulation (ΔSWE) variability biases and decorrelates L-band InSAR
 snow-water-equivalent retrievals (NISAR-relevant), evaluated over the

@@ -16,6 +16,7 @@ want() { [ "$SEC" = "all" ] || [ "$SEC" = "$1" ]; }
 
 want const && run "M3.2-3.4 constants check (kappa, looks, f, geometry)"        stats/constants_check.py
 want 3.1 && run "M3.1  NISAR interval accumulation (CDEC pillows: -1 / +18 cm)" stats/interval_accumulation.py
+want 3.1 && run "M3.1  NISAR baselines, height of ambiguity, geometric coherence" stats/nisar_baselines.py
 want 3.4 && run "M3.4  NISAR Bamler oversample factor f, L20, L80"              nisar/calibrate_enl.py
 want 4.1 && run "R4.1  ASO |M|/arg(M) per-pair + pooled stats"                  stats/aso_M_stats.py
 want 4.1 && run "R4.1  spatial consistency r^2 across pairs"                    stats/consistency_stats.py

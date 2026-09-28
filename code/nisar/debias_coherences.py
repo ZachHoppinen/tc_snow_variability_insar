@@ -4,8 +4,8 @@ the snowy P23 pair (2025-12-19 -> 2025-12-31), Tuolumne.
 The delivered GUNW carries two coherence layers at different looks:
     wrappedInterferogram     20 m   5x6  = 30  nominal looks  (L_20 = 30 / f)
     unwrappedInterferogram   80 m   13x16= 208 nominal looks  (L_80 = 208 / f)
-With a single oversampling factor f = 1.287 (calibrate_enl.py) the effective
-looks are L_20 ~ 23.3 and L_80 ~ 161.6.
+With a single oversampling factor f = 1.317 (calibrate_enl.py, Provisional) the effective
+looks are L_20 ~ 22.8 and L_80 ~ 157.9.
 
 A finite number of looks biases the coherence estimate UP, and more so at fewer
 looks, so the raw 20-80 m gap is partly just this multilook-bias gap. We remove
@@ -46,18 +46,18 @@ from tc_paths import DATA_ROOT, FIG_ROOT  # noqa: E402
 RAW_MAIN = DATA_ROOT / "sub_pixel_variability"
 GUNW_DIR = RAW_MAIN / "raw/nisar/gunw"
 PAIRS = {                                  # the two delivered standard GUNWs,
-                                           # by their original ASF product names
+                                           # by their original ASF product names (Provisional P05023)
     "P12": ("NISAR_L2_PR_GUNW_007_042_D_069_008_4000_SH_20251207T025607_"
-            "20251207T025642_20251219T025608_20251219T025642_X05010_N_F_J_001.h5",
+            "20251207T025642_20251219T025608_20251219T025642_P05023_N_F_J_001.h5",
             "2025-12-07 -> 2025-12-19"),
     "P23": ("NISAR_L2_PR_GUNW_008_042_D_069_009_4000_SH_20251219T025608_"
-            "20251219T025642_20251231T025608_20251231T025643_X05010_N_F_J_001.h5",
+            "20251219T025642_20251231T025608_20251231T025643_P05023_N_F_J_001.h5",
             "2025-12-19 -> 2025-12-31"),
 }
 WATER_MASK = (Path(__file__).resolve().parent.parent
               / "cache/tuolome_water_mask_worldcover_80m.tif")
 
-F_OVERSAMPLE = 1.287                      # single value, both resolutions (calibrate_enl.py)
+F_OVERSAMPLE = 1.317                      # single value, both resolutions (calibrate_enl.py)
 N_LOOKS_20, N_LOOKS_80 = 5 * 6, 13 * 16
 L_20, L_80 = N_LOOKS_20 / F_OVERSAMPLE, N_LOOKS_80 / F_OVERSAMPLE
 

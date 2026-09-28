@@ -68,9 +68,9 @@ def main():
     print("\nM3.4  NISAR multilook bias (nisar/calibrate_enl.py, debias_coherences.py)")
     allok &= check("nominal looks 20 m (5x6)", 30, N_LOOKS_20)
     allok &= check("nominal looks 80 m (13x16)", 208, N_LOOKS_80)
-    allok &= check("oversampling factor f", 1.29, round(F_OVERSAMPLE, 2), tol=0.005)
+    allok &= check("oversampling factor f", 1.32, round(F_OVERSAMPLE, 2), tol=0.005)
     allok &= check("effective looks L_20 = N/f", 23, round(L_20))
-    allok &= check("effective looks L_80 = N/f", 162, round(L_80))
+    allok &= check("effective looks L_80 = N/f", 158, round(L_80))
 
     print("\n" + ("ALL CONSTANTS MATCH THE MANUSCRIPT" if allok
                   else "*** SOME CONSTANTS DIFFER -- reconcile code and text ***"))

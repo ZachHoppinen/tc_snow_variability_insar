@@ -86,7 +86,7 @@ def main() -> None:
     fig.colorbar(im_arg, ax=axes[1, :], location="right", shrink=0.85,
                  pad=0.02, label="Phase Bias (deg)")
 
-    fig.suptitle(f"{wy} ({gap_days(a, b)} days): sub-pixel M by band at 81 m")
+    fig.suptitle(f"{wy} ({gap_days(a, b)} days): M by band at 81 m")
     out = FIG_DIR / f"7_bands_M_{wy}.png"
     fig.savefig(out, dpi=DPI)
     plt.close(fig)

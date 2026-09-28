@@ -1,0 +1,26 @@
+RC1: Anonymous Referee #1, 29 Jul 2026
+https://doi.org/10.5194/egusphere-2026-3772-RC1
+
+'Comment on egusphere-2026-3772'
+, Anonymous Referee #1, 29 Jul 2026
+Overall
+This is a very interesting and timely analysis of the limitations of InSAR SWE retrieval. The authors provide great motivation for this study and tie it to snow applications relatable to Cryosphere readers. It is unique in its focus on specific InSAR processing effects over complex terrain where the underlying snow depth and water content distributions are highly variable. The validation study with aerial lidar is appropriate and well thought out. My main overall comment is that this is very heavy in remote sensing theory and the general Cryosphere audience could use more context and explanation, especially as this relates to NISAR. The Theoretical Framework section assumes a lot of familiarity with SAR and InSAR processing at a level that some, used to polished science data products, may lack. I think much of this could be resolved with the inclusion of one or more figures that help explain the windows, multi-look windows, averaged windows, and sub-windows, and how these relate to the "pixels" we'd see in a NISAR data product. The Discussion section does a great job capturing the major points and takeaways for other researchers.
+Specific Comments
+Theory (2): I would like a graphical representation that clearly explains the windows, multi-look windows, averaged windows, and sub-windows. The concept of windows is brought up with little context, and at first I was confusing it between spatial and temporal windowing. For the science user base interacting with NISAR data, it would be nice also graphically explain the relation between these window definitions and pixels. If multi-look averaging is a step in NISAR's data processing I'd like to see a more detailed description of it. I'm not sure if it is using adjacent frames from along NISAR's orbit or a pair of SAR collections. Is Figure 1 showing sub-windows that end up as a single pixel in an InSAR data product?
+Theory (2): I would consider not setting φ=Δφ since it is used so few times, and Section 3.4 seems to revert to the Δφ notation.
+Methods (3.1, 3.2): Can we get more information on the LiDAR system used, i.e. the platform and sensor, flight height, GNSS positioning? Also, define how snow depth and SWE are calculated. I assume snow depth comes from digital terrain differencing, but what algorithms are used? And why do snow depth and SWE have different resolutions (3m and 50m)?
+Methods (3.3): Provide a graphical representation of the radial power spectral density for ΔSWE spatial variation.
+Methods (3.3): How is 95% snow cover determined? Is this what Appendix B covers? If so, specify.
+Methods (3.4): How is κ calculated?
+Methods (3.5): arg(M) and κ have been described, but the introduction of arg(M)/κ could use more description.
+Methods (3.6): Again, a figure showing how multi-looking works specifically for NISAR would be helpful for potential NISAR users.
+Methods (3.6): In Equation 9, what does the ~ over γ mean for true coherence? One line 199 true coherence was called simply γ.
+Results: Figure 4, indicate where there is higher elevation / more complex terrain, perhaps in a separate figure of the basin.
+Discussion: To what extent does the NISAR data being uncalibrated affect this study?
+Technical Corrections
+Line 32: No comma needed after "acquisitions".
+Line 36, 45: Consider alternative to having "SWE" as single variable name.
+Line 125: Specify that 3m and 50m are spatial resolutions, if that is what they are.
+Citation
+: https://doi.org/
+10.5194/egusphere-2026-3772-RC1

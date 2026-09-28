@@ -1,0 +1,142 @@
+runconfig:
+  name: NISAR_INSAR_RUNCONFIG
+  groups:
+    pge_name_group:
+      pge_name: INSAR_L_PGE
+    input_file_group:
+      reference_rslc_file: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/cropped/NISAR_L1_PR_RSLC_012_114_D_070_4005_DHDH_A_20260210T024824_20260210T024859_P05023_N_F_J_001_sub_sub.h5
+      secondary_rslc_file: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/cropped/NISAR_L1_PR_RSLC_013_114_D_070_4005_DHDH_A_20260222T024825_20260222T024900_P05023_N_F_J_001_sub.h5
+      qa_gunw_input_file: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/product.h5
+    dynamic_ancillary_file_group:
+      dem_file: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260129_20260222/dem.tif
+      water_mask_file: null
+      orbit_files:
+        reference_orbit_file: null
+        secondary_orbit_file: null
+      troposphere_weather_model_files:
+        reference_troposphere_file: null
+        secondary_troposphere_file: null
+      tec_file: null
+    primary_executable:
+      product_type: GUNW
+      product_version:
+        rifg_version: 1.0.2
+        roff_version: 1.0.2
+        runw_version: 1.0.2
+        goff_version: 1.0.2
+        gunw_version: 1.0.2
+      composite_release_id: P05023
+      processing_type: PR
+      product_accuracy: N
+      processing_center: J
+      partial_granule_id: NISAR_{Level}_PR_{ProductType}_{Track}_{Frame}_{Mode}_{Pol}_{RefStartDateTime}_{RefEndDateTime}_{SecStartDateTime}_{SecEndDateTime}_P05023_N_F_J_001
+    product_path_group:
+      product_path: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look
+      scratch_path: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/scratch
+      sas_output_file: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/product.h5
+      product_counter: 1
+      qa_output_dir: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/qa_insar
+    debug_level_group:
+      debug_switch: false
+    processing:
+      input_subset:
+        list_of_frequencies:
+          A:
+          - HH
+      dem_download:
+        source: null
+        top_left:
+          x: null
+          y: null
+        bottom_right:
+          x: null
+          y: null
+      geocode:
+        output_epsg: 32611
+        top_left:
+          x_abs: 234723.0
+          y_abs: 4198098.0
+        bottom_right:
+          x_abs: 301086.0
+          y_abs: 4147569.0
+        output_posting:
+          A:
+            x_posting: 80
+            y_posting: 80
+        wrapped_interferogram:
+          interp_method: SINC
+          output_posting:
+            A:
+              x_posting: 20
+              y_posting: 20
+      radar_grid_cubes:
+        output_epsg: 32611
+        output_posting:
+          x_posting: null
+          y_posting: null
+        top_left:
+          x_abs: 234723.0
+          y_abs: 4198098.0
+        bottom_right:
+          x_abs: 301086.0
+          y_abs: 4147569.0
+      ionosphere_phase_correction:
+        spectral_diversity: main_diff_ms_band
+        enabled: true
+        dispersive_filter:
+          filter_mask_type:
+          - coherence
+          - subswath_mask
+          filter_coherence_threshold: 0.2
+          kernel_range: 39
+          kernel_azimuth: 39
+          sigma_range: 13
+          sigma_azimuth: 13
+      troposphere_delay:
+        enabled: false
+      dense_offsets:
+        enabled: true
+        window_range: 64
+        window_azimuth: 96
+        half_search_range: 16
+        half_search_azimuth: 16
+        skip_range: 75
+        skip_azimuth: 75
+        correlation_surface_oversampling_factor: 16
+        deramping_method: magnitude
+      offsets_product:
+        enabled: false
+      rubbersheet:
+        enabled: true
+        polyfitting:
+          enabled: true
+          degree: 2
+          critical_value: 0.1
+          samples_along_range: 200
+          samples_along_azimuth: 200
+      fine_resample:
+        enabled: true
+      crossmul:
+        range_looks: 1
+        azimuth_looks: 1
+      phase_unwrap:
+        range_looks: 13
+        azimuth_looks: 16
+        preprocess_wrapped_phase:
+          enabled: true
+          mask:
+            mask_type: subswath_mask
+        bridge:
+          enabled: false
+    worker:
+      internet_access: false
+      gpu_enabled: false
+      intermediate_files_removal_enabled: true
+    qa:
+      gunw:
+        workflows:
+          validate: false
+          qa_reports: false
+    logging:
+      path: /Volumes/OWC Express 1M2/nisar_swe/data/nisar/gunw/aso_24day/merced_20260210_20260222_1look/scratch/insar.log
+      write_mode: a

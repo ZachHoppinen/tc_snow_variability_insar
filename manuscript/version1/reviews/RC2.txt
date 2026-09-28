@@ -1,0 +1,148 @@
+Review:
+
+Thanks to the authors for this contribution. The idea presented is relatively new to the dInSAR
+technique for dSWE and it presents interesting discussion on multilooking window selection
+for processing. However, I have found issues that prevent me from recommending its
+publication without a major revision. The paper needs to broaden theoretical discussion,
+including selected references and provide a more thoughtful discussion on their ﬁndings.
+
+
+
+General Comments:
+
+There are important papers that should be consulted as they discuss coherence for non-
+stationary processes. Touzi et al., 1999 models di erently the non-stationarity. Yueh et al.,
+2026 directly addresses the topic presented here. The latter is particularly important here.
+Also consider Rott et al., 2003, although the formulation is for sub-pixel scale.
+
+An important addition to the paper would be to quantify both the absolute value and the
+argument of M with respect to standard deviation or relevant metrics within the window. Now,
+the reader cannot quantify the any impact of the variability. It is necessary to better quantify
+the magnitude of the e ect. Consider the following:
+
+   1. Choose a window size and generate phase samples (“per-cell deviation from mean”)
+      drawn from a distribution. For example, Gaussian 𝑁(0, 𝜎) or consider other distribution
+      that captures the spatial distribution within the window.
+   2. Calculate complex M, repeat enough times till convergence.
+   3. Repeat for di erent values of sigma. This would provide an idea of the e ect of M for
+      di erent window variabilities, instead of the arbitrary examples presented in Figure 1.
+
+
+This can also be calculated analytically but of course it’s more tedious. Consider this both in
+absolute dSWE and radians. Consider di erent distributions. For example, in case the
+underlying distribution is Gaussian of 𝛿, or a symmetric distribution in general, I would expect
+that 𝐸{arg(𝑀)} = 0. This is your case in Figure 1 (middle). Then, the estimated phase from the
+window will not be skewed. The reader needs to understand already in section 2 what causes
+the skewing.
+
+How does the typical multilooking window look like in terms of Δ𝑆𝑊𝐸? Which distribution
+approximate it better? This could be linked to your dataset. Based on your results (Figure 5),
+the distribution of Δ𝑆𝑊𝐸 may not be symmetrical. While this is partially addressed in Section
+4.2, I think the aggregation over the whole dataset does not allow understanding of the
+individual multilook variability.
+Another important consideration are variations of local incidence angle in the multilooking
+window. Although the sensitivity is smaller than Δ𝑆𝑊𝐸, changes in LIA within the multilooking
+window will produce the same e ect even for constant Δ𝑆𝑊𝐸. In particular to your dataset,
+the northeast area seems to have lower values of M, but also presents more topographical
+variations.
+
+Can you report the spatial baseline between NISAR acquisitions? The orbital tube for NISAR is
+small, but I wonder if small spatial baseline between passes can impact the coherence in
+some areas of your images.
+
+A distinction between posting, resolution and multilook is needed. The multilooked domain,
+either 5x6 or 13x16, does not correspond to 20 or 81 ground meters, as multilooking is
+calculated in radar coordinates. Range resolution also depends with incidence angle.
+Comparing NISAR coherence and Lidar-derived M needs to be done with care (e.g., Section
+4.3).
+
+The terminology “within-window”, “sub-window”, and “footprint” is used somewhat
+interchangeably throughout the manuscript.
+
+
+
+Speciﬁc Comments:
+
+The abstract and introduction does not stress enough the main problem. Phase is highly
+sensitive to Δ𝑆𝑊𝐸 and Δ𝑆𝑊𝐸is highly spatially variable. Also high decorrelation makes large
+multilooking an attractive option to deal with noise at a cost of spatial resolution.
+
+Section 2:
+
+Somewhere along the ﬁrst paragraph it should be commented that this “averaging” is
+performed spatially.
+
+Equation 2 should be introduced more clearly.
+
+Figure 1 requires more explanation, describe how many pixels are you using, the central
+frequency you are using (as later described this is critical). Also consider discussing if the
+presented dynamic range is reasonable for SAR revisit times. Do you observe ±8cm=80mm
+Δ𝑆𝑊𝐸 often?
+
+I think you need to di erentiate between real noise free Δ𝑆𝑊𝐸 or Δ𝜙 and observed values. For
+example, in Line 86 it is unclear if 𝛿 refers to stochastic noise or Δ𝑆𝑊𝐸 deviations from the
+mean. If the process is stationary, then 𝛿 = 0 for every pixel. The section already discusses in
+terms of estimated phase variance when in my understanding, you are discussing the e ect of
+the underlying distribution of Δ𝑆𝑊𝐸.
+
+Section 3.4:
+When using the LIA=40 for the whole image, the topography is ignored, which varies sub-
+window variability.
+
+Section 3.6:
+
+The claim on the Circular Gaussian as the limitation is unclear.
+
+Equitation 8 is based on stationary samples. Since the central discussion of the paper is the
+non-stationarity I think commenting the validity of this equation is in order.
+
+Section 4.5:
+
+The results, in particular related to C-band are quite pessimistic. How do these compare to
+literature, for example Oveisgharan et al., 2024, Oveisgharan et al., 2026, Bovenga et al., 2025
+among others? This requires reconciliation with previous papers.
+
+Section 5.2:
+
+I don’t agree with this. For tower imagery I would not expect high spatial variability within the
+multilook window. The whole window may be smaller than a typical satellite resolution cell.
+
+Snow depth/SWE for sea ice snow, is typically smaller than land. This is hinted on line 433.
+This is why I believe you need to quantify either analytically or numerically the e ect of phase
+variance in the complex coherence.
+
+
+
+Speciﬁc Comments:
+
+Line 22: how “approximately weekly observations” are meet? Which constellation? S1?
+Where?
+
+Line 48 to 50: These two sentences discusses di erent issues, variability in the pixel and
+within the estimation window, and are provided without reference.
+
+Line 50: Not completely sure if the original quote refers to your problem or phase unwrapping
+errors, as di erences larger than 2pi cannot be recovered with some unwrapping tools.
+
+Line 74: PDF require deﬁnition?
+
+Line 86: I would suppose that all terms in this section are already noise-free, then how is 𝛿
+decorrelation noise alone?
+
+Line 102: This is repeated.
+
+Line 103: not necessarily true for all frequencies.
+
+Line 164: Int.phase is deﬁned between (-pi, pi].
+
+Line 328 and 333: Again the e ect of the LIA could be a ecting the non-stationarity.
+Line 342: I don’t agree with this, see my points regarding Section 2.
+
+Line 406: I think those paper start my calculating coherence spatially, so I don’t think saying
+they use temporal rather than spatial averaging is right, can you check?
+
+Line 412: drop the formula of the phase closure as neither it or z are deﬁned or used
+elsewhere.
+
+Figure 7 refers to sub-pixel on the title.
+

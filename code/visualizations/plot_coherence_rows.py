@@ -6,7 +6,7 @@ than a finer (20 m) one -- by 1 - |M| in the ideal case. Finite looks also bias
 coherence upward, more so at fewer looks, so we first de-bias each resolution by
 inverting the Bamler curve at its own effective looks L,
 
-    gamma_tilde = E^{-1}{ gamma_hat | L },     L_20 ~ 23, L_80 ~ 162,
+    gamma_tilde = E^{-1}{ gamma_hat | L },     L_20 ~ 23, L_80 ~ 158,
 
 and then take the corrected drop
 

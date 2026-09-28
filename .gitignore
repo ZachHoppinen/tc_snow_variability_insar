@@ -29,3 +29,6 @@ __pycache__/
 *.fls
 *.fdb_latexmk
 manuscript/template.pdf
+
+scratch/
+data/

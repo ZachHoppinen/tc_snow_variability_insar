@@ -11,6 +11,7 @@ Core dependency: all ASO `|M|` stats import the M pipeline + constants
 | § | Stat in text | Script | Status |
 |---|---|---|---|
 | **M3.1** | Dec 7-19 mean -1 cm, Dec 19-31 mean +18 cm SWE (CDEC pillows) | `stats/interval_accumulation.py` | maps (CDEC fetch) |
+| **M3.1** | B_perp -109 / +127 m; height of ambiguity ~790 / ~680 m; geometric coherence 0.996 flat (0.98 at 10 deg local incidence) | `stats/nisar_baselines.py` (GUNW radarGrid cube over the ASO AOI at 2500 m) | **confirmed** (Provisional) |
 | **M3.2** | per-pair densities 304/312/373/330 kg m^-3; 10 cm + [50,600] filter | `ASO/aso_pairwise_dswe.py` (thresholds in `stats/constants_check.py`) | **confirmed** |
 | **M3.3** | 3x3->9 m; 9x9=81 m; N>=41; kappa 224.1/52.7/15.5; 40 deg | `ASO/aso_M_calculation.py` -> `stats/constants_check.py` | **confirmed** |
 | **M3.4** | looks 30 (20 m) / 208 (80 m); f~1.29; L20~23, L80~162; 13,189 water samples | `nisar/calibrate_enl.py`,`debias_coherences.py` -> `stats/constants_check.py` | **confirmed** (calibrate_enl rerun: 13,189, f=1.287) |
@@ -66,7 +67,7 @@ fixed for the extra directory level.
 The paper's only NISAR analysis is the multi-resolution coherence check (P12/P23),
 so `nisar/` holds just that pipeline:
 - `calibrate_enl.py` (M3.4 f/ENL), `debias_coherences.py` (R4.3 corrected coherence),
-  `build_calibration_water_mask.py` (water mask), `generate_nisar_products.sh` (driver).
+  `generate_nisar_products.sh` (driver).
 
 `nisar/exploratory/` -- closure-only, not in the paper:
 - `prep_nisar.py` + `p13_template_runconfig.yaml` -- long-baseline P13/P24 GUNW

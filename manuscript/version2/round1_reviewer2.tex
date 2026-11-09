@@ -63,6 +63,14 @@ Thank you. All three are now cited, together with Zebker and Chen (2005), which 
 
 We agree that the reader needs a number. Section~2.1 now expands $\log M$ in the cumulants of the within-window phase distribution, giving $|M|$ and $\arg(M)$ to leading order (Eqs.~7 and 8), and Figure~7 in Section~4.2 plots both against the phase spread over all lidar windows. The first term is the Gaussian result of Rott et al. (2003) and Yueh et al. (2026). The second is the bias, which a Gaussian cannot produce and which the odd moments cause. We do use the lidar windows as the background of Figure~7 in addition to your theoretical suggestion, as we feel that grounding the results in the actual observed $\Delta$SWE values is useful. Figure~7 shows every window individually rather than an aggregate. We have not fitted a named distribution, because beyond about 1.5\,rad of spread the phase wraps and $M$ depends on the full shape of the distribution rather than on any low-order family.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/1b_M_vs_spread.png}
+    \caption{Manuscript's Figure 7}
+    \label{fig:placeholder}
+\end{figure}
+
+
 \textit{Another important consideration are variations of local incidence angle in the multilooking window. Although the sensitivity is smaller than ΔSWE changes in LIA within the multilooking window will produce the same effect even for constant ΔSWE In particular to your dataset, the northeast area seems to have lower values of M, but also presents more topographical variations.}
 
 We use a constant local incidence angle of 40$^\circ$ (Section 3.4) over the lidar extent for the ASO-based conversions, so this is not a factor in our results, and the low $|M|$ in the northeast of the basin is $\Delta$SWE structure rather than terrain geometry. We have added a sentence to Section 3.4 to clarify this and a sentence to the Limitations about the potential for local incidence angle variations to add to or reduce the within-window effects over real terrain. The NISAR analysis, since it compares the storm pair against the no-accumulation pair, holds the local incidence angle constant in that part of the comparison, though the larger spread of incidence angle within an 80\,m window than within a 20\,m window might affect it.
@@ -128,7 +136,7 @@ The C-band result is pessimistic for large events, and we think that is likely a
 
 \textit{Section 5.2: I don't agree with this. For tower imagery I would not expect high spatial variability within the multilook window. The whole window may be smaller than a typical satellite resolution cell.}
 
-Agreed. SodSAR images 0.1\,m pixels over a scene of about 35 by 30\,m (Ruiz et al., 2020), below a single satellite resolution cell, so its wind dependence is not evidence for variation between cells across a multi-look window. The paragraph no longer claims that, and now places the tower result at the sub-cell scale of Rott et al. (2003) (lines 417--418).
+Agreed. SodSAR images 0.1\,m pixels over a scene of about 35 by 30\,m (Ruiz et al., 2020), below a single satellite resolution cell, so its wind dependence is not evidence for variation between cells across a multi-look window. The paragraph no longer claims this (lines 417--418).
 
 \textit{Snow depth/SWE for sea ice snow, is typically smaller than land. This is hinted on line 433. This is why I believe you need to quantify either analytically or numerically the effect of phase variance in the complex coherence.}
 

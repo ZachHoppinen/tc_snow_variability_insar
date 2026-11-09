@@ -99,9 +99,9 @@ def window_stats(date_a: str, date_b: str):
 
 
 def summarize(name: str, arr: np.ndarray) -> str:
-    p25, p75 = np.percentile(arr, [25, 75])
+    p1, p25, p75, p99 = np.percentile(arr, [1, 25, 75, 99])
     return (f"{name:9s} mean={arr.mean():8.3f}  median={np.median(arr):8.3f}  "
-            f"IQR=[{p25:7.3f}, {p75:7.3f}]  (n={arr.size:,})")
+            f"IQR=[{p25:7.3f}, {p75:7.3f}]  p1-p99=[{p1:7.3f}, {p99:7.3f}]  (n={arr.size:,})")
 
 
 def main() -> None:

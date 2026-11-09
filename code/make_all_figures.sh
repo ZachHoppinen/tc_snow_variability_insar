@@ -23,6 +23,7 @@ run () {
 
 # theory / schematic figures
 run visualizations/teach_phasor_contrast.py
+run visualizations/plot_M_vs_spread.py
 run visualizations/phase_wraps_bands.py
 
 # data visualizations
@@ -42,7 +43,7 @@ echo
 echo "=================================================================="
 echo ">> copying paper figures -> manuscript/figures/"
 echo "=================================================================="
-cp "${FIG_ROOT}"/[1-7]_*.png "${MANUSCRIPT_FIGS}/"
+cp "${FIG_ROOT}"/[1-7]*_*.png "${MANUSCRIPT_FIGS}/"   # includes 1b_
 cp "${FIG_ROOT}"/B[0-9]_*.png "${MANUSCRIPT_FIGS}/"   # appendix figures (B1, ...)
 
 echo

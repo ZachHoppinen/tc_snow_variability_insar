@@ -152,7 +152,7 @@ def geometry_inset(ax, rect, track_label):
                  arrowprops=dict(arrowstyle="-|>", color="#1565c0", lw=2.2, mutation_scale=13), zorder=4)
     ins.plot(ox, 0, "o", color="k", ms=3, zorder=5)
     # labels: flight at the tail end of the track, imaging beside the blue arrow tip
-    ins.text(ox - fx * 0.75 + 0.55, -fy * 0.75 - 0.15, "flight\ndirection", fontsize=7.5,
+    ins.text(ox - fx * 0.75 + 0.55, -fy * 0.75 - 0.15, "orbit\ndirection", fontsize=7.5,
              fontweight="bold", ha="center", va="center", linespacing=0.9)
     ins.text(ox + lx * 0.85 + 0.05, ly * 0.85 - 0.28, "imaging\ndirection", color="#1565c0", fontsize=7.5,
              fontweight="bold", ha="center", va="center", linespacing=0.9)

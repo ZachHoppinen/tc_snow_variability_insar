@@ -15,6 +15,13 @@ gamma_geom is also given for a slope facing the radar (local incidence 10 deg),
 the worst realistic case outside layover. Wavelength and range bandwidth are
 read from the product.
 
+Also reports the ground footprint of the two GUNW multi-look windows (referee 2:
+posting vs resolution vs multi-look). The windows are defined in radar
+coordinates, range looks x azimuth looks, so their ground size is
+  range:   looks * slantRangeSpacing / sin(incidence)
+  azimuth: looks * zeroDopplerTimeSpacing * ground speed
+and differs from the 20 / 80 m posting of the geocoded map grid.
+
 Run with the nisar_pytools env and TC_DATA_ROOT pointing at the data tree:
     python code/stats/nisar_baselines.py
 """
@@ -57,11 +64,22 @@ def baselines(gunw: Path) -> dict:
         inc = np.radians(g["incidenceAngle"][k][m])
         rng = g["referenceSlantRange"][k][m]
         lam = C / float(h["science/LSAR/GUNW/grids/frequencyA/centerFrequency"][()])
-        bw = float(h["science/LSAR/GUNW/metadata/processingInformation/parameters/reference/frequencyA/rangeBandwidth"][()])
+        par = "science/LSAR/GUNW/metadata/processingInformation/parameters"
+        bw = float(h[f"{par}/reference/frequencyA/rangeBandwidth"][()])
+        dr = float(h[f"{par}/reference/frequencyA/slantRangeSpacing"][()])
+        dt = float(h[f"{par}/reference/frequencyA/zeroDopplerTimeSpacing"][()])
+        looks = {lay: (int(h[f"{par}/{lay}Interferogram/frequencyA/numberOfRangeLooks"][()]),
+                       int(h[f"{par}/{lay}Interferogram/frequencyA/numberOfAzimuthLooks"][()]))
+                 for lay in ("wrapped", "unwrapped")}
+        vel = h["science/LSAR/GUNW/metadata/orbit/reference/velocity"][()]
+        pos = h["science/LSAR/GUNW/metadata/orbit/reference/position"][()]
+    speed = np.linalg.norm(vel, axis=1).mean()
+    alt = np.linalg.norm(pos, axis=1).mean() - 6371e3
+    daz = speed * 6371e3 / (6371e3 + alt) * dt          # ground-projected azimuth spacing (m)
     h_amb = lam * rng * np.sin(inc) / (2 * np.abs(bperp))
     b_crit = lam * rng * bw * np.tan(inc) / C                       # flat terrain
     b_crit_slope = lam * rng * bw * np.tan(np.radians(10.0)) / C    # slope facing the radar
-    return dict(height=z[k], n=int(m.sum()), lam=lam, bw=bw,
+    return dict(height=z[k], n=int(m.sum()), lam=lam, bw=bw, dr=dr, daz=daz, looks=looks,
                 bperp=bperp, bpar=bpar, inc=np.degrees(inc), rng=rng, h_amb=h_amb,
                 g_flat=1 - np.abs(bperp) / b_crit, g_slope=1 - np.abs(bperp) / b_crit_slope,
                 b_crit=b_crit)
@@ -88,6 +106,13 @@ def main() -> None:
         print(f"  critical baseline, flat (km): {fmt(r['b_crit']/1e3)}")
         print(f"  geometric coherence, flat terrain:      {fmt(r['g_flat'], 4)}")
         print(f"  geometric coherence, 10 deg local inc.: {fmt(r['g_slope'], 3)}")
+        # multi-look window footprints on the ground at the basin's min / median / max incidence
+        print(f"  single-look sampling: {r['dr']:.2f} m slant range x {r['daz']:.2f} m azimuth")
+        for lay, (rl, al) in r["looks"].items():
+            az = al * r["daz"]
+            gr = [rl * r["dr"] / np.sin(np.radians(t)) for t in (np.nanmin(r["inc"]), np.nanmedian(r["inc"]), np.nanmax(r["inc"]))]
+            print(f"  {lay} layer, {rl} rg x {al} az looks: ground range {gr[1]:.0f} m ({gr[2]:.0f} to {gr[0]:.0f} over the basin) "
+                  f"x azimuth {az:.0f} m = {gr[1]*az:.0f} m^2, equivalent square {np.sqrt(gr[1]*az):.0f} m")
 
 
 if __name__ == "__main__":

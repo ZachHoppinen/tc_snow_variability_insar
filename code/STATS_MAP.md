@@ -11,7 +11,10 @@ Core dependency: all ASO `|M|` stats import the M pipeline + constants
 | § | Stat in text | Script | Status |
 |---|---|---|---|
 | **M3.1** | Dec 7-19 mean -1 cm, Dec 19-31 mean +18 cm SWE (CDEC pillows) | `stats/interval_accumulation.py` | maps (CDEC fetch) |
-| **M3.1** | B_perp -109 / +127 m; height of ambiguity ~790 / ~680 m; geometric coherence 0.996 flat (0.98 at 10 deg local incidence) | `stats/nisar_baselines.py` (GUNW radarGrid cube over the ASO AOI at 2500 m) | **confirmed** (Provisional) |
+| **M3.1** | B_perp -109 / +127 m; height of ambiguity ~790 / ~680 m; geometric coherence 0.996 flat (0.98 at 10 deg local incidence); multi-look window footprints 5x6 = 22 x 27 m, 13x16 = 58 x 71 m ground at 44.7 deg (single-look 3.12 m slant x 4.45 m az) | `stats/nisar_baselines.py` (GUNW radarGrid cube over the ASO AOI at 2500 m) | **confirmed** (Provisional) |
+| **T2 (Sec. 2)** | cumulant expansion vs lidar windows: \|M\| error < 0.05 and arg error < 3 deg up to 1.5 rad; fails beyond 1.75 rad; skew IQR -0.34/+0.50, excess kurtosis IQR -0.31/+1.26 | `stats/cumulant_check.py` | confirmed (session) |
+| **M3.6** | Bamler de-bias applied at effective coherence \|M\| gamma_other recovers it to within 0.003 at L=158 and 0.014 at L=23 (two-level phase pattern, Monte Carlo) | `stats/bamler_nonstationary_check.py` | confirmed (session) |
+| **response R2** | figure: true / raw / de-biased coherence vs within-window phase spread, Gaussian pattern, L = 23 and 158; de-biased within 0.035 at L=158, 23-look |M| floor ~1/sqrt(L) | `stats/plot_bamler_nonstationary.py` -> `figures/stats/bamler_nonstationary.png` | response letter |
 | **M3.2** | per-pair densities 304/312/373/330 kg m^-3; 10 cm + [50,600] filter | `ASO/aso_pairwise_dswe.py` (thresholds in `stats/constants_check.py`) | **confirmed** |
 | **M3.3** | 3x3->9 m; 9x9=81 m; N>=41; kappa 224.1/52.7/15.5; 40 deg | `ASO/aso_M_calculation.py` -> `stats/constants_check.py` | **confirmed** |
 | **M3.4** | looks 30 (20 m) / 208 (80 m); f~1.29; L20~23, L80~162; 13,189 water samples | `nisar/calibrate_enl.py`,`debias_coherences.py` -> `stats/constants_check.py` | **confirmed** (calibrate_enl rerun: 13,189, f=1.287) |
@@ -32,6 +35,7 @@ Core dependency: all ASO `|M|` stats import the M pipeline + constants
 | Figure in text | Script |
 |---|---|
 | `teach_phasor_contrast.png` (theory) | `visualizations/teach_phasor_contrast.py` |
+| `1b_M_vs_spread.png` (theory, referee 2: M vs within-window spread; Gaussian/ramp/gamma/lognormal curves over the lidar windows) | `visualizations/plot_M_vs_spread.py` (imports `window_stats` from `stats/aso_M_stats.py`) |
 | `fig_phase_wraps_bands.png` (M3.3) | `visualizations/phase_wraps_bands.py` |
 | `all_pairs_dswe_M_L.png` (R4.1) | `visualizations/plot_all_pairs.py` |
 | `bands_M_WY2025.png` (R4.2) | `visualizations/plot_bands_one_pair.py` |
